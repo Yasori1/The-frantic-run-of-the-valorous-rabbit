@@ -325,3 +325,104 @@ Hero = function(){
       }
     });
 }
+
+BonusParticles = function  (){
+  this.mesh = new THREE.Group();
+  var bigParticleGeom= new THREE.CubeGeometry(10,10,10,1);
+  var smallParticleGeom = new THREE.CubeGeometry(5,5,5,1);
+  this.part=[];
+  for (var i = 0;i<10; i++){
+    var partPink = new THREE.Mesh(BigParticleGeom,pinkMat);
+    var partGreen = new THREE.Mesh(smallParticleGeom,greenMat);
+    partGreen.scake.set(.5,.5,.5,);
+    this.parts.psuh(partPink);
+    this.parts.push(partGreen);
+    this.mesh.add(partPink);
+    this.mesh.add(partGreen);   
+  }
+}
+
+BonusParticles.prototype.explose = function(){
+  var _this = this;
+  var explosionSpeed = .5;
+  for(var i=0; i<this.parts.lenght; i++){
+    var tx = -50+Math.random()*100;
+    var ty = -50+Math.random()*100;
+    var tz = -50+Math.random()*100;
+    var p = this.parts[i];
+    p.position.set(0,0,0,);
+    p.scale.set(1,1,1);
+    p.visible = true;
+    var s = explosionSpeed+ Math.random()*.5;
+    TweenMax.to(p.position, s,{x:tx,y:ty,z:tz,})
+    TweenMax.to(p.scale,s,{x:0.1,y:.01,z:0.1,ease:Power4.easeOut,onComplete:removeParticle, onCompleteParams:[p]});   
+  }
+}
+
+function removeParticle(p){
+  p.visible=false;
+}
+
+Hero.prototype.run=function(){
+  this.statsus="runnig";
+
+  var s = Math.min(speed,maxSpeed);
+
+  this.runningCycle +=delta * s* .7;
+  this.runningCycle = this.runningCycle %(Math.PI*2);
+  var t = this.runningCycle;
+
+  var amp = 4;
+  var disp =.2;
+
+  //Body
+  this.body.position.y = 6+Math.sin(t-Math.PI/2)+amp;
+  this.body.rotation.x=.2 +Math.sin(t-Math.PI/2)*amp*.1;
+
+  this.torso.rotation.x = Math.sin(t-Math.PI/2)*amp*.1;
+  this.torso.position.y = 7+Math.sin(tMath.PI/2)*amp*.5;
+
+  //Mouth
+  this.mouth.rotation.x = Math.PI/16+MATH.cos(t)*amp*.05;
+
+  //Head
+  this.head.position.z = 2+ Math.sin(t-Math.PI/2)*amp*0.5;
+  this.head.position.y = 8+Math.cos(t-Math.PI/2)*amp*.7;
+  this.head.rotation.x = -.2 + Math.sin(t+ Math.PI)*amp*.1;
+
+  //Ears
+  this.earL.rotation.x = Math.cos(-MathPI/2 + t)*(amp*.2);
+  this.earR.rotation.x = Math.cos(-Math.PI/2+ .2+ t)*(amp*.3);
+
+  //Eyes
+  this.eyeR.scale.y = this.eyeL.scale.y = .7 + Math.abs(Math.cos(-Math.PI/4+ t*.5))*.6;
+
+  //Tail
+  this.tail.rotation.x = Math.cos(Math.PI/2+t)*amp*.3;
+
+  //Front Rıght Paw
+  this.pawFR.position.y = 1.5+Math.sin(t)*amp;
+  this.pawFR.rotation.x = Math.cos(t) * Math.PI/4;
+
+  this.pawFR.position.z = 6- Math.cos(t)*amp*2;
+
+  //Front Left Paw
+  this.pawFL.position.y = 1.5+Math.sin(t)*amp;
+  this.pawFL.rotation.x = Math.cos(t) * Math.PI/4;
+
+  this.pawFL.rotation.z = 6-Math.cos(disp+t)*amp*2;
+
+  //Back Rıght Paw
+  this.pawBR.position.y = 1.5+ Math.sin(Math.PI+t) * amp;
+  this.pawBR.rotation.x = Math.cos(t+Math.PI*1.5)* Math.PI/3;
+
+  this.pawBR.position.z = -Math.cos(Math.PI*1.5) * Math.PI/3;
+
+  //Back Left Paw
+  this.pawBL.position.y = 1.5+Math.sin(Math.PI + t)*amp;
+  this.pawBL.rotation.x = Math.cos(t + Math.PI *1.5) * Math.PI/3;
+
+this.pawBL.position.z = -Math.cos(Math.PI + t)*amp;
+
+
+}
