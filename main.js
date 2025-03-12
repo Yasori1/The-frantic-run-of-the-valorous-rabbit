@@ -9,13 +9,13 @@ var scene,
   clock;
 var delta = 0;
 var floorRadius = 200;
-var speed = 6;
+var speed = 9;
 var distance = 0;
 var level = 1;
 var levelInterval;
 var levelUpdateFreq = 3000;
-var initSpeed = 5;
-var maxSpeed = 48;
+var initSpeed = 150;
+var maxSpeed = 56;
 var monsterPos = .65;
 var monsterPosTarget = .65;
 var floorRotation = 0;
